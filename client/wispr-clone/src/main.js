@@ -20,7 +20,7 @@ function changeRecordingState(){
     playAudio();
     //empty the audio chunks once recording is finished
     emptyAudioChunks();
-}//bus are there
+}//bugs are there
 
 function changeButtonState() {
     if (istalking) {
