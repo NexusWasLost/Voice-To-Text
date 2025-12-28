@@ -1,0 +1,48 @@
+<!doctype html data-theme="dark">
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Wispr Clone</title>
+  <style>
+    * {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+    }
+    </style>
+</head>
+
+<body>
+  <header class="container">
+    <nav>
+      <ul>
+        <li><h3><strong>Wispr Clone</strong></h3></li>
+      </ul>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Github</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <button class="talk-btn">Push to Talk <i class="fa-solid fa-microphone-slash" style="margin-left: 5px;"></i></button>
+    <article>Transcription will appear here</article>
+  </main>
+
+  <footer class="container">Made using Tauri</footer>
+  <script type="module" src="/main.js" defer></script>
+  <script type="module" src="/mic.js" defer></script>
+</body>
+
+</html>
