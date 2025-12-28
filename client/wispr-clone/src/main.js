@@ -1,4 +1,4 @@
-import { playAudio, startRecorder, stopRecorder, emptyAudioChunks } from "./mic.js";
+import { playAudio, startRecorder, stopRecorder } from "./mic.js";
 
 const talkBtn = document.querySelector(".talk-btn");
 let istalking = false;
@@ -17,10 +17,11 @@ function changeRecordingState(){
     //stop the recording
     stopRecorder();
     //play the recording
-    playAudio();
-    //empty the audio chunks once recording is finished
-    emptyAudioChunks();
-}//bugs are there
+    setTimeout(function() {
+        playAudio();
+    }, 100);
+
+}
 
 function changeButtonState() {
     if (istalking) {

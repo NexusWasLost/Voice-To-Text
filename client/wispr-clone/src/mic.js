@@ -25,6 +25,9 @@ async function setupMic() {
 }
 
 export async function startRecorder(){
+    //empty audio chunks for new recording
+    emptyAudioChunks();
+
     const mediaStream = await setupMic();
     if(!mediaStream) return;
 
@@ -42,7 +45,9 @@ export async function startRecorder(){
 
 export function stopRecorder(){
     recorder.stop();
-    console.log("Recording stopped...");
+    recorder.onstop = function(){
+        console.log("Recording stopped...");
+    }
 }
 
 export function playAudio(){
@@ -56,7 +61,7 @@ export function playAudio(){
     audio.play();
 }
 
-export function emptyAudioChunks(){
+function emptyAudioChunks(){
     //empty the audio chunks array
     audioChunks = [];
 }
