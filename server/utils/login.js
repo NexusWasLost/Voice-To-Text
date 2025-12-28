@@ -4,6 +4,6 @@ import configuration from "../config.js";
 import { createClient } from "@deepgram/sdk";
 
 // Must use accessToken property in options object
-const deepgramClient = createClient({ accessToken: configuration.DEEPGRAM_API_KEY });
+const deepgramClient = createClient({ key: configuration.DEEPGRAM_API_KEY });
 
 export default deepgramClient;

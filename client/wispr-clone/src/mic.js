@@ -1,7 +1,6 @@
-let audioChunks = [];
 let recorder;
 
-async function setupMic() {
+export async function setupMic() {
     //check if media devices are available or not
     if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
         console.log("Error Setting Up Mic");
@@ -24,17 +23,12 @@ async function setupMic() {
     }
 }
 
-export async function startRecorder(){
-    //empty audio chunks for new recording
-    emptyAudioChunks();
-
-    const mediaStream = await setupMic();
-    if(!mediaStream) return;
-
+export async function startRecorder(audioChunks, mediaStream){
     recorder = new MediaRecorder(mediaStream);
-    //start the media recorder
+    //start the media recorder (with 250ms slices)
     recorder.start(250);
 
+    //push every non empty audio blob object into the audioChunks array
     recorder.ondataavailable = function(event){
         if(event.data.size > 0){
             audioChunks.push(event.data);
@@ -50,18 +44,7 @@ export function stopRecorder(){
     }
 }
 
-export function playAudio(){
+export function createAudioBlob(audioChunks){
     const blob = new Blob(audioChunks, { type: 'audio/webm' });
-
-    // 2. Create a "link" to this file in the computer's memory
-    const url = URL.createObjectURL(blob);
-
-    // 3. Play it!
-    const audio = new Audio(url);
-    audio.play();
-}
-
-function emptyAudioChunks(){
-    //empty the audio chunks array
-    audioChunks = [];
+    return blob;
 }
