@@ -23,18 +23,11 @@ export async function setupMic() {
     }
 }
 
-export async function startRecorder(audioChunks, mediaStream){
+export function startRecorder(mediaStream){
     recorder = new MediaRecorder(mediaStream);
     //start the media recorder (with 250ms slices)
     recorder.start(250);
-
-    //push every non empty audio blob object into the audioChunks array
-    recorder.ondataavailable = function(event){
-        if(event.data.size > 0){
-            audioChunks.push(event.data);
-            console.log("New data recorded");
-        }
-    }
+    return recorder;
 }
 
 export function stopRecorder(){
@@ -44,7 +37,7 @@ export function stopRecorder(){
     }
 }
 
-export function createAudioBlob(audioChunks){
-    const blob = new Blob(audioChunks, { type: 'audio/webm' });
-    return blob;
+export async function createAudioBuffer(audioBlob){
+    const audioBuf = await audioBlob.arrayBuffer();
+    return audioBuf;
 }
