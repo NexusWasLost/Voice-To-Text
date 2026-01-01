@@ -1,32 +1,13 @@
-import configuration from "./config.js";
-
 import { WebSocketServer } from "ws";
 import WebSocket from "ws";
-import { getTranscript } from "./utils/getTranscript.js";
+import { getConnection, attachDGListeners } from "./utils/deepgram.conf.js";
 
 const wss = new WebSocketServer({ port: 8080 });
 
 wss.on("connection", function (client) {
     console.log("Client Connected with Server");
 
-    let deepgramConn = new WebSocket(configuration.DEEPGRAM_WEBSOCKET_URL,
-        ["token", configuration.DEEPGRAM_API_KEY]
-    );
-
-    deepgramConn.on("open", function () {
-        console.log("Connected to Deepgram itself");
-    });
-
-    deepgramConn.on("message", function (message) {
-        const transcript = getTranscript(message);
-        if (transcript !== "") {
-            console.log("Transcript: ", transcript);
-        }
-    });
-
-    deepgramConn.on("error", function (error) {
-        console.log("Error from Deepgram: ", error);
-    })
+    let deepgramConn = null;
 
     client.on("message", function (buffer) {
         // console.log("Message Recieved Buffer: ", buffer[0]); //for debugging
@@ -38,37 +19,35 @@ wss.on("connection", function (client) {
             return;
         }
 
+        //check if the first byte in the buffer is 26 (0x1A) which is apparently denotes the start of Webm header
         if (buffer[0] === 26) {
             // console.log("buffer is a metadata");
 
             //if there is an active connection - terminate it
             if (deepgramConn) {
                 deepgramConn.terminate();
+                deepgramConn = null;
             }
 
             //create a new webscoket connection to deepgram
-            deepgramConn = new WebSocket(configuration.DEEPGRAM_WEBSOCKET_URL,
-                ["token", configuration.DEEPGRAM_API_KEY]
-            );
-
-            deepgramConn.on("open", function () {
-                console.log("New Pipe Open. Sending Header now.");
-                deepgramConn.send(buffer);
+            deepgramConn = getConnection();
+            attachDGListeners(deepgramConn, function (transcript) {
+                client.send(JSON.stringify({
+                    type: "TRANSCRIPT",
+                    transcript: transcript
+                }));
             });
 
-            //reattach the event listener
-            deepgramConn.on("message", function (message) {
-                const transcript = getTranscript(message);
-                if (transcript !== "") {
-                    console.log("Transcript: ", transcript);
-                }
+            //special listener for the first byte of the buffer
+            deepgramConn.on("open", function () {
+                console.log("Connection Open to Deepgram...");
+                deepgramConn.send(buffer);
             });
 
             return;
         }
 
         if (deepgramConn.readyState === WebSocket.OPEN) {
-            // console.log("Sent Data too Deepgram...");
             deepgramConn.send(buffer);
         }
     });
@@ -85,3 +64,10 @@ wss.on("connection", function (client) {
         console.log("Client disconnected");
     });
 })
+
+function sendTranscript(client, transcript) {
+    client.send(JSON.stringify({
+        type: "TRANSCRIPT",
+        transcript: transcript
+    }));
+}
