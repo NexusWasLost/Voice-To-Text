@@ -68,7 +68,7 @@ cd Voice-To-Text
 
 ---
 
-### ✨ Architecture
+## ✨ Architecture
 
 The Architecture for this whole system is more or less much straightforward.
 
@@ -77,6 +77,8 @@ The Architecture for this whole system is more or less much straightforward.
 - Upon sending the first chunk of data, the server then initiates another WebSocket connection to Deepgram's open socket.
 - On ready, the data is sent to Deepgram via WebSocket and Deepgram processes our audio data and transcripts data in real time and then returns transcripts.
 - On recieving the transcript data from Deepgram, the Node server processes it and then sends back the transcription to the Client.
+
+---
 
 ### 🔑 A Key Challenge
 
