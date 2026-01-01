@@ -2,7 +2,7 @@
 
 A lightweight and simple Voice-To-Text Cross-Platform Application made using **Tauri**, **Node.js** and **Deepgram**.
 
-### Features
+## 📦 Features
 - *Simple and Lightweight:* Zero-Bloat, minimal UI with fast performance.
 
 - *Cross Platform:* Fully cross-platform support enabled using Tauri
@@ -15,14 +15,14 @@ A lightweight and simple Voice-To-Text Cross-Platform Application made using **T
 
 - *Copy Transcriptions:* Copy all transcriptions with just one click of a button.
 
-### Tech Stack
+### 💻 Tech Stack
 - *Frontend:* Tauri, HTML, CSS, JavaScript.
 - *Backend:* Node.js, Websockets (ws).
 - *AI:* Deepgram SDK for real-time transcription,
 
 ---
 
-### How to run locally
+### 🚀 How to run locally
 
 Pre-requisites: Node.js, Tauri, Rust (Tauri Dependency)
 
@@ -68,7 +68,7 @@ cd Voice-To-Text
 
 ---
 
-### Architecture
+### ✨ Architecture
 
 The Architecture for this whole system is more or less much straightforward.
 
@@ -78,7 +78,7 @@ The Architecture for this whole system is more or less much straightforward.
 - On ready, the data is sent to Deepgram via WebSocket and Deepgram processes our audio data and transcripts data in real time and then returns transcripts.
 - On recieving the transcript data from Deepgram, the Node server processes it and then sends back the transcription to the Client.
 
-### A Key Challenge
+### 🔑 A Key Challenge
 
 A key challenge I faced was managing the initial audio metadata.
 
@@ -88,7 +88,7 @@ While streaming, the first byte of the buffer contains the metadata for the audi
 
 To resolve this, implemented a check for the metadata byte(`26`) to see for this byte in the buffer. When detected, the server creates a new WebSocket connection to Deepgram; terminating any previous ones, ensuring that the first byte a connection receives is the metadata and all the rest are always audio data.
 
-###  References
+### ℹ️  References
 
 - https://github.com/deepgram/deepgram-js-sdk/
 - https://udn.realityripple.com/docs/Web/API/MediaRecorder/onstop
