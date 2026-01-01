@@ -78,8 +78,6 @@ The Architecture for this whole system is more or less much straightforward.
 - On ready, the data is sent to Deepgram via WebSocket and Deepgram processes our audio data and transcripts data in real time and then returns transcripts.
 - On recieving the transcript data from Deepgram, the Node server processes it and then sends back the transcription to the Client.
 
----
-
 ## 🔑 A Key Challenge
 
 A key challenge I faced was managing the initial audio metadata.
