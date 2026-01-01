@@ -25,9 +25,9 @@ A lightweight and simple Voice-To-Text Cross-Platform Application made using **T
 ### 🚀 How to run locally
 
 Pre-requisites:
-    - [Node.js](https://nodejs.org/en).
-    - [Tauri](https://v2.tauri.app/).
-    - [Rust (Tauri Dependency)](https://rust-lang.org/).
+    [Node.js](https://nodejs.org/en),
+    [Tauri](https://v2.tauri.app/),
+    [Rust (Tauri Dependency)](https://rust-lang.org/)
 
 1. Clone the Repository
 ```shell
@@ -80,6 +80,16 @@ The Architecture for this whole system is more or less much straightforward.
 - Upon sending the first chunk of data, the server then initiates another WebSocket connection to Deepgram's open socket.
 - On ready, the data is sent to Deepgram via WebSocket and Deepgram processes our audio data and transcripts data in real time and then returns transcripts.
 - On recieving the transcript data from Deepgram, the Node server processes it and then sends back the transcription to the Client.
+
+## 💭 Descisions
+
+Here are a few descision I made while making this project:
+
+- *Server (middleman):* Even though Deepgram provides URL to their open WebSocket connection and its the same thing being used in the application, I preferred to maintain a server to keep the DEEPGRAM API key secure and also to process the transcription data.
+
+- *Minimalistic UI:* The UI made is using base HTML, CSS and JavaScript while using Pico CSS and a bit of custom CSS, I focused totally on the core functionality of the application rather than having a detailed frontend.
+
+- *Code Modularity:* I tried to keep the code as modular as possible to ensure better readability and maintainability. Trying to encapsulate similiar functioning parts together.
 
 ## 🔑 A Key Challenge
 
