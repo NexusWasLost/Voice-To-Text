@@ -62,12 +62,31 @@ cd Voice-To-Text
 	```shell
 	npm install
 	```
+    - Create a `.env` file and enter envs.
+
 	- Start the server
 	```shell
 	npm run dev
 	```
 
 5. Refresh the frontend Client to connect if running to connect to the Server.
+
+### `.env` contents
+Here is an example `.env`
+```toml
+PORT=3000
+DEEPGRAM_API_KEY=<your_api_key>
+DEEPGRAM_WEBSOCKET_URL=wss://api.deepgram.com/v1/listen?model=nova-3&smart_format=true&interim_results=true
+```
+
+## 🔢 Getting Deepgram API Key
+1. Login to Deepgram or Create an Account. > https://deepgram.com/
+
+2. Create a Project (if Deepgram didnt create one already),
+
+3. Navigate to **"API KEY"** and create an API KEY and copy its value.
+
+4. Inside the `.env` type the value `DEEPGRAM_API_KEY=<your_api_key>` (The API Key Goes there) !
 
 ---
 
@@ -90,6 +109,8 @@ Here are a few descision I made while making this project:
 - *Minimalistic UI:* The UI made is using base HTML, CSS and JavaScript while using Pico CSS and a bit of custom CSS, I focused totally on the core functionality of the application rather than having a detailed frontend.
 
 - *Code Modularity:* I tried to keep the code as modular as possible to ensure better readability and maintainability. Trying to encapsulate similiar functioning parts together.
+
+- *Hosting:* Unfortunately, hosting a server that primarily uses WebSockets for free is a big hassle and inefficient, keeping that in mind I decided not to host the server.
 
 ## 🔑 A Key Challenge
 
