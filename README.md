@@ -24,7 +24,10 @@ A lightweight and simple Voice-To-Text Cross-Platform Application made using **T
 
 ### 🚀 How to run locally
 
-Pre-requisites: Node.js, Tauri, Rust (Tauri Dependency)
+Pre-requisites:
+    - [Node.js](https://nodejs.org/en).
+    - [Tauri](https://v2.tauri.app/).
+    - [Rust (Tauri Dependency)](https://rust-lang.org/).
 
 1. Clone the Repository
 ```shell
