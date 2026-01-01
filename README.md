@@ -80,7 +80,7 @@ The Architecture for this whole system is more or less much straightforward.
 
 ---
 
-### 🔑 A Key Challenge
+## 🔑 A Key Challenge
 
 A key challenge I faced was managing the initial audio metadata.
 
