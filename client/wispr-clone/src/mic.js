@@ -23,14 +23,16 @@ export async function setupMic() {
     }
 }
 
-export function startRecorder(mediaStream){
-    recorder = new MediaRecorder(mediaStream);
-    //start the media recorder (with 250ms slices)
-    recorder.start(250);
+export function createRecorder(mediaStream){
+    recorder = new MediaRecorder(mediaStream, { mimeType: "audio/webm" });
     return recorder;
 }
 
-export function stopRecorder(){
+export function startRecording(recorder){
+    recorder.start(250);
+}
+
+export function stopRecording(recorder){
     recorder.stop();
     recorder.onstop = function(){
         console.log("Recording stopped...");
