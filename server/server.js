@@ -66,11 +66,4 @@ wss.on("connection", function (client) {
         }
         console.log("Client disconnected");
     });
-})
-
-function sendTranscript(client, transcript) {
-    client.send(JSON.stringify({
-        type: "TRANSCRIPT",
-        transcript: transcript
-    }));
-}
+});
