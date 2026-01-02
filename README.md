@@ -7,7 +7,7 @@ Demo Video: https://drive.google.com/file/d/1jVsNRN4lepOspCLNGmCXqNeVZma1lnuA/vi
 ## 📦 Features
 - *Simple and Lightweight:* Zero-Bloat, minimal UI with fast performance.
 
-- *Cross Platform:* Fully cross-platform support enabled using Tauri
+- *Cross Platform:* Fully cross-platform support enabled using Tauri.
 
 - *Smooth Auto-Scroll:* New transcriptions pin to the bottom for a seamless experience.
 
