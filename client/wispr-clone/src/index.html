@@ -19,14 +19,16 @@
       font-family: "JetBrains Mono", monospace;
       font-weight: 500;
     }
-    </style>
+  </style>
 </head>
 
 <body>
   <header class="container">
     <nav>
       <ul>
-        <li><h3><strong>Wispr Clone</strong></h3></li>
+        <li>
+          <h3><strong>Wispr Clone</strong></h3>
+        </li>
       </ul>
       <ul>
         <li><a href="#">Home</a></li>
@@ -36,14 +38,26 @@
   </header>
 
   <main class="container">
-    <button class="talk-btn">Push to Talk <i class="fa-solid fa-microphone-slash" style="margin-left: 5px;"></i></button>
-    <article class="transcription-area no-content">Transcription will appear here</article>
+    <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+      <button class="talk-btn contrast" style="width: auto; padding: 1rem 2rem;">
+        Push to Talk <i class="fa-solid fa-microphone-slash"></i>
+      </button>
+    </div>
+
+    <article>
+      <header style="display: flex; justify-content: space-between; align-items: center;">
+        <strong>Transcription will appear here</strong>
+        <button class="outline secondary" id="copy-btn" style="padding: 2px 10px; font-size: 0.8rem;">
+          <i class="fa-solid fa-copy"></i> Copy
+        </button>
+      </header>
+
+      <div class="transcription-area" style="height: 500px; overflow-y: auto;">
+      </div>
+    </article>
   </main>
 
-  <footer class="container">Made using Tauri</footer>
   <script type="module" src="/main.js" defer></script>
-  <!-- <script type="module" src="/mic.js" defer></script> -->
-  <!-- <script type="module" src="/sock.js" defer></script> -->
 </body>
 
 </html>

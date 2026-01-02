@@ -1,5 +1,5 @@
 import { createRecorder, startRecording, stopRecording, setupMic } from "./mic.js";
-import { sendDataToServerWS } from "./sock.js";
+import { createSocket, attachSocketListeners, sendDataToServerWS } from "./sock.js";
 
 let transcriptChunks = [], transcriptCount = 0;
 let recorder;
@@ -7,7 +7,15 @@ let recorder;
 let transcriptionArea = document.querySelector(".transcription-area");
 const talkBtn = document.querySelector(".talk-btn");
 
+const copyBtn = document.querySelector("#copy-btn");
+
 let istalking = false;
+
+const socket = createSocket();
+attachSocketListeners(socket, function (data){
+    transcriptChunks.push(data);
+    displayTranscriptions();
+});
 
 talkBtn.addEventListener("click", function () {
     changeButtonState();
@@ -25,7 +33,7 @@ async function changeRecordingState() {
         startRecording(recorder);
         //whenever data is there send to the server
         recorder.addEventListener("dataavailable", function(event){
-            sendDataToServerWS(event.data);
+            sendDataToServerWS(socket, event.data);
         });
 
         return;
@@ -46,23 +54,41 @@ function changeButtonState() {
     talkBtn.innerHTML = 'Listening <i class="fa-solid fa-microphone" style="margin-left: 5px;"></i>';
 }
 
-function check_T_AreaContent() {
-    //remove the transcription placeholder
-    if (transcriptionArea.classList.contains("no-content")) {
-        transcriptionArea.textContent = "";
-        transcriptionArea.classList.remove("no-content");
+copyBtn.addEventListener("click", async function(){
+    let textToCopy = transcriptChunks.join(" ");
+
+    if(!textToCopy) return;
+
+    try {
+        await navigator.clipboard.writeText(textToCopy);
+
+        copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied';
+        setTimeout(function() {
+            copyBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
+        }, 2000);
     }
-}
+    catch (error) {
+        console.error("Failed to copy: ", error);
+    }
+})
 
-export function displayTranscriptions() {
+function displayTranscriptions() {
     if (transcriptChunks.length === 0) return;
-
-    //remove the transcription area placeholder before displaying the transcriptions
-    check_T_AreaContent();
+    let lastElement;
 
     for (transcriptCount; transcriptCount < transcriptChunks.length; transcriptCount++) {
         let p = document.createElement("p");
-        p.textContent = "Speaker: " + transcriptChunks[transcriptCount];
+        p.textContent = transcriptChunks[transcriptCount];
         transcriptionArea.appendChild(p);
+        lastElement = p; // Keep track of the newest one
+    }
+
+    //enable smooth scrolling
+    if (lastElement) {
+        lastElement.scrollIntoView({
+            behavior: "smooth",
+            block: "end"
+        });
     }
 }
+

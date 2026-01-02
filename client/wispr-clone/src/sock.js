@@ -1,24 +1,29 @@
 //handle sockets
 
-const socket = new WebSocket("ws://127.0.0.1:8080/");
-
-socket.onopen = function () {
-    console.log("Connected to Backend Server");
+export function createSocket() {
+    const socket = new WebSocket("ws://127.0.0.1:8080/");
+    return socket;
 }
 
-socket.onclose = function () {
-    console.log("Disconnected from Backend Server");
+export function attachSocketListeners(socket, onData) {
+    socket.onopen = function () {
+        console.log("Connected to Backend Server");
+    }
+
+    socket.onclose = function () {
+        console.log("Disconnected from Backend Server");
+    }
+
+    socket.onmessage = function (message) {
+        const recieved = JSON.parse(message.data);
+        onData(recieved.transcript);
+    }
+
+    socket.onerror = function (error) {
+        console.log("WebSocket ERROR: ", error);
+    }
 }
 
-socket.onmessage = function (message) {
-    const recieved = JSON.parse(message.data);
-    console.log(recieved);
-}
-
-socket.onerror = function (error) {
-    console.log("WebSocket ERROR: ", error);
-}
-
-export function sendDataToServerWS(data){
+export function sendDataToServerWS(socket, data) {
     socket.send(data);
 }

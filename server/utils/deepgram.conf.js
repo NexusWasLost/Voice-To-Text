@@ -21,7 +21,6 @@ export function attachDGListeners(deepgramConn, onTranscript) {
         const transcript = getTranscript(message);
         if (transcript !== "") {
             onTranscript(transcript);
-            console.log(transcript);
         }
     });
 

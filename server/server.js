@@ -1,8 +1,9 @@
+import configuration from "./config.js";
 import { WebSocketServer } from "ws";
 import WebSocket from "ws";
 import { getConnection, attachDGListeners } from "./utils/deepgram.conf.js";
 
-const wss = new WebSocketServer({ port: 8080 });
+const wss = new WebSocketServer({ port: configuration.PORT });
 
 wss.on("connection", function (client) {
     console.log("Client Connected with Server");
@@ -60,7 +61,9 @@ wss.on("connection", function (client) {
     });
 
     client.on("close", function () {
-        deepgramConn.terminate();
+        if(deepgramConn){
+            deepgramConn.terminate();
+        }
         console.log("Client disconnected");
     });
 })
