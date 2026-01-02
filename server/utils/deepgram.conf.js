@@ -32,7 +32,3 @@ export function attachDGListeners(deepgramConn, onTranscript) {
         console.log("Error from Deepgram: ", error);
     });
 }
-
-export function fetchTranscript(){
-
-}
