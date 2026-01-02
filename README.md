@@ -74,7 +74,7 @@ cd Voice-To-Text
 ### `.env` contents
 Here is an example `.env`
 ```toml
-PORT=3000
+PORT=8080
 DEEPGRAM_API_KEY=<your_api_key>
 DEEPGRAM_WEBSOCKET_URL=wss://api.deepgram.com/v1/listen?model=nova-3&smart_format=true&interim_results=true
 ```
@@ -100,9 +100,9 @@ The Architecture for this whole system is more or less much straightforward.
 - On ready, the data is sent to Deepgram via WebSocket and Deepgram processes our audio data and transcripts data in real time and then returns transcripts.
 - On recieving the transcript data from Deepgram, the Node server processes it and then sends back the transcription to the Client.
 
-## 💭 Descisions
+## 💭 Decisions
 
-Here are a few descision I made while making this project:
+Here are a few decision I made while making this project:
 
 - *Server (middleman):* Even though Deepgram provides URL to their open WebSocket connection and its the same thing being used in the application, I preferred to maintain a server to keep the DEEPGRAM API key secure and also to process the transcription data.
 
@@ -112,13 +112,15 @@ Here are a few descision I made while making this project:
 
 - *Hosting:* Unfortunately, hosting a server that primarily uses WebSockets for free is a big hassle and inefficient, keeping that in mind I decided not to host the server.
 
+- *Transcription Latency:* I utilized Deepgram's `is_final` flag to ensure transcript accuracy and readability. While this introduces a slight delay as the AI determines sentence boundaries, it prevents word redundancy, common in raw interim streams.
+
 ## 🔑 A Key Challenge
 
 A key challenge I faced was managing the initial audio metadata.
 
-The issue I was faced was after the initial audio streaming was done, Deepgram won't process the second stream of audio. Upon debugging and referring to AI, the bug I found was the *audio metadata* !
+The issue I faced was that after the initial audio streaming was done, Deepgram won't process the second stream of audio. Upon debugging and referring to AI, the bug I found was the *audio metadata* !
 
-While streaming, the first byte of the buffer contains the metadata for the audio. Deepgram expects that metadata only once per connection. If the connection remained open and a metadata is received, Deepgram will discard that byte and any data further sent.
+While streaming, the first byte of the buffer contains the metadata for the audio. Deepgram expects that metadata only once per connection. If the connection remained open and a metadata is received again, Deepgram will discard that byte and any data further sent.
 
 To resolve this, implemented a check for the metadata byte(`26`) to see for this byte in the buffer. When detected, the server creates a new WebSocket connection to Deepgram; terminating any previous ones, ensuring that the first byte a connection receives is the metadata and all the rest are always audio data.
 
