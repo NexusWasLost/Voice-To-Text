@@ -1,6 +1,7 @@
 #  Voice To Text Application (Wispr Flow Clone)
 
 A lightweight and simple Voice-To-Text Cross-Platform Application made using **Tauri**, **Node.js** and **Deepgram**.
+Demo Video: https://drive.google.com/file/d/1jVsNRN4lepOspCLNGmCXqNeVZma1lnuA/view?usp=sharing
 
 ## 📦 Features
 - *Simple and Lightweight:* Zero-Bloat, minimal UI with fast performance.
