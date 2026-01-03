@@ -20,7 +20,7 @@ Demo Video: https://drive.google.com/file/d/1jVsNRN4lepOspCLNGmCXqNeVZma1lnuA/vi
 ### 💻 Tech Stack
 - *Frontend:* Tauri, HTML, CSS, JavaScript.
 - *Backend:* Node.js, Websockets (ws).
-- *AI:* Deepgram SDK for real-time transcription,
+- *AI:* Deepgram.
 
 ---
 
@@ -98,8 +98,8 @@ The Architecture for this whole system is more or less much straightforward.
 
 - The Client connects to the Node.js server using a WebSocket connection.
 - The Client is ready to send data to the server.
-- Upon sending the first chunk of data, the server then initiates another WebSocket connection to Deepgram's open socket.
-- On ready, the data is sent to Deepgram via WebSocket and Deepgram processes our audio data and transcripts data in real time and then returns transcripts.
+- Upon sending the first chunk of data, the server then initiates another WebSocket connection to Deepgram's open socket connection.
+- On ready, the data is sent to Deepgram via WebSocket and Deepgram processes the audio data and transcripts it in real time and then returns transcripts.
 - On recieving the transcript data from Deepgram, the Node server processes it and then sends back the transcription to the Client.
 
 ## 💭 Decisions
@@ -128,9 +128,8 @@ To resolve this, implemented a check for the metadata byte(`26`) to see for this
 
 ### ℹ️  References
 
-- https://github.com/deepgram/deepgram-js-sdk/
-- https://udn.realityripple.com/docs/Web/API/MediaRecorder/onstop
-- https://chatgpt.com
-- https://gemini.google.com
-- https://v2.tauri.app/start/create-project/
 - https://developers.deepgram.com/reference/speech-to-text/listen-streaming
+- https://udn.realityripple.com/docs/Web/API/MediaRecorder/onstop
+- https://gemini.google.com
+- https://github.com/deepgram/deepgram-js-sdk/
+- https://v2.tauri.app/start/create-project/
