@@ -1,24 +1,20 @@
 #  Voice To Text Application (Wispr Flow Clone)
 
-A lightweight and simple Voice-To-Text Cross-Platform Application made using **Tauri**, **Node.js** and **Deepgram**.
-
-Demo Video: https://drive.google.com/file/d/1jVsNRN4lepOspCLNGmCXqNeVZma1lnuA/view?usp=sharing
+A lightweight and simple Voice-To-Text web app made using **Node.js** and **Deepgram**.
 
 ## 📦 Features
-- *Simple and Lightweight:* Zero-Bloat, minimal UI with fast performance.
-
-- *Cross Platform:* Fully cross-platform support enabled using Tauri.
+- *Simple and Lightweight:* Zero-Bloat, minimal UI !.
 
 - *Smooth Auto-Scroll:* New transcriptions pin to the bottom for a seamless experience.
 
 - *Live Transcriptions:* Live Transcriptions that appear as user speaks made possible using Websockets.
 
-- *Minimalistic UI:* Incredibly Minimal UI made with Pico CSS and a bit of custom CSS.
+- *Minimalistic UI:* Incredibly Minimal UI made with Bulma CSS and custom CSS styling.
 
 - *Copy Transcriptions:* Copy all transcriptions with just one click of a button.
 
 ### 💻 Tech Stack
-- *Frontend:* Tauri, HTML, CSS, JavaScript.
+- *Frontend:* HTML, CSS, JavaScript.
 - *Backend:* Node.js, Websockets (ws).
 - *AI:* Deepgram SDK for real-time transcription,
 
@@ -28,8 +24,6 @@ Demo Video: https://drive.google.com/file/d/1jVsNRN4lepOspCLNGmCXqNeVZma1lnuA/vi
 
 Pre-requisites:
     [Node.js](https://nodejs.org/en),
-    [Tauri](https://v2.tauri.app/),
-    [Rust (Tauri Dependency)](https://rust-lang.org/)
 
 1. Clone the Repository
 ```shell
@@ -41,21 +35,7 @@ git clone https://github.com/NexusWasLost/Voice-To-Text.git
 cd Voice-To-Text
 ```
 
-3. Set Up Frontend
-	- navigate into client directory
-	```shell
-	cd client/wispr-clone
-	```
-	- Install all the dependencies
-	```shell
-	npm install
-	```
-	- Start the frontend client
-	```shell
-	npm run tauri dev
-	```
-
-4. Setup Backend
+3. Setup Backend
 	- From client directory, navigate to server directory
 	```shell
 	cd ../../server
@@ -71,7 +51,7 @@ cd Voice-To-Text
 	npm run dev
 	```
 
-5. Refresh the frontend Client to connect if running to connect to the Server.
+4. Start frontend using extension like live server.
 
 ### `.env` contents
 Here is an example `.env`
@@ -98,7 +78,7 @@ The Architecture for this whole system is more or less much straightforward.
 
 - The Client connects to the Node.js server using a WebSocket connection.
 - The Client is ready to send data to the server.
-- Upon sending the first chunk of data, the server then initiates another WebSocket connection to Deepgram's open socket.
+- Upon sending the first chunk of data, the server then initiates a WebSocket connection to Deepgram's open socket.
 - On ready, the data is sent to Deepgram via WebSocket and Deepgram processes our audio data and transcripts data in real time and then returns transcripts.
 - On recieving the transcript data from Deepgram, the Node server processes it and then sends back the transcription to the Client.
 
@@ -108,7 +88,7 @@ Here are a few decision I made while making this project:
 
 - *Server (middleman):* Even though Deepgram provides URL to their open WebSocket connection and its the same thing being used in the application, I preferred to maintain a server to keep the DEEPGRAM API key secure and also to process the transcription data.
 
-- *Minimalistic UI:* The UI made is using base HTML, CSS and JavaScript while using Pico CSS and a bit of custom CSS, I focused totally on the core functionality of the application rather than having a detailed frontend.
+- *Minimalistic UI:* The UI made is using base HTML, CSS and JavaScript while using Bulma CSS and custom CSS styling, I focused totally on the core functionality of the application rather than having a detailed frontend.
 
 - *Code Modularity:* I tried to keep the code as modular as possible to ensure better readability and maintainability. Trying to encapsulate similiar functioning parts together.
 
@@ -132,5 +112,4 @@ To resolve this, implemented a check for the metadata byte(`26`) to see for this
 - https://udn.realityripple.com/docs/Web/API/MediaRecorder/onstop
 - https://chatgpt.com
 - https://gemini.google.com
-- https://v2.tauri.app/start/create-project/
 - https://developers.deepgram.com/reference/speech-to-text/listen-streaming
