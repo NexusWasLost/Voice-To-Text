@@ -23,23 +23,23 @@ export async function setupMic() {
     }
 }
 
-export function createRecorder(mediaStream){
+export function createRecorder(mediaStream) {
     recorder = new MediaRecorder(mediaStream, { mimeType: "audio/webm" });
     return recorder;
 }
 
-export function startRecording(recorder){
+export function startRecording(recorder) {
     recorder.start(250);
 }
 
-export function stopRecording(recorder){
+export function stopRecording(recorder) {
     recorder.stop();
-    recorder.onstop = function(){
+    recorder.onstop = function () {
         console.log("Recording stopped...");
     }
 }
 
-export async function createAudioBuffer(audioBlob){
+export async function createAudioBuffer(audioBlob) {
     const audioBuf = await audioBlob.arrayBuffer();
     return audioBuf;
 }

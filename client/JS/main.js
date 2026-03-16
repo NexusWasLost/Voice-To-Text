@@ -12,7 +12,7 @@ const copyBtn = document.querySelector("#copy-btn");
 let istalking = false;
 
 const socket = createSocket();
-attachSocketListeners(socket, function (data){
+attachSocketListeners(socket, function (data) {
     transcriptChunks.push(data);
     displayTranscriptions();
 });
@@ -32,7 +32,7 @@ async function changeRecordingState() {
         //start recording
         startRecording(recorder);
         //whenever data is there send to the server
-        recorder.addEventListener("dataavailable", function(event){
+        recorder.addEventListener("dataavailable", function (event) {
             sendDataToServerWS(socket, event.data);
         });
 
@@ -46,24 +46,24 @@ async function changeRecordingState() {
 function changeButtonState() {
     if (istalking) {
         istalking = false;
-        talkBtn.innerHTML = 'Push to Talk <i class="fa-solid fa-microphone-slash" style="margin-left: 5px;"></i>';
+        talkBtn.innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
         return;
     }
 
     istalking = true;
-    talkBtn.innerHTML = 'Listening <i class="fa-solid fa-microphone" style="margin-left: 5px;"></i>';
+    talkBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
 }
 
-copyBtn.addEventListener("click", async function(){
+copyBtn.addEventListener("click", async function () {
     let textToCopy = transcriptChunks.join(" ");
 
-    if(!textToCopy) return;
+    if (!textToCopy) return;
 
     try {
         await navigator.clipboard.writeText(textToCopy);
 
         copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied';
-        setTimeout(function() {
+        setTimeout(function () {
             copyBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
         }, 2000);
     }
