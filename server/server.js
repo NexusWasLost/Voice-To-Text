@@ -20,13 +20,31 @@ wss.on("connection", function (client) {
             return;
         }
 
+        if (typeof buffer === "string") {
+            const msg = JSON.parse(buffer);
+            if (msg.type !== "STOP") return;
+
+
+            if (deepgramConn && deepgramConn.readyState === WebSocket.OPEN) {
+                deepgramConn.send(JSON.stringify({ type: "CloseStream" }));
+                deepgramConn = null;
+            }
+            return;
+        }
+
         //check if the first byte in the buffer is 26 (0x1A) which is apparently denotes the start of Webm header
         if (buffer[0] === 26) {
             // console.log("buffer is a metadata");
 
-            //if there is an active connection - terminate it
+            //if there is an active connection - gracefully close it
             if (deepgramConn) {
-                deepgramConn.terminate();
+
+                let closingConnection = deepgramConn;
+                //check if the old connection is still open then send a graceful closing request
+                if (closingConnection.readyState === WebSocket.OPEN) {
+                    closingConnection.send(JSON.stringify({ type: "CloseStream" }));
+                }
+
                 deepgramConn = null;
             }
 
@@ -39,7 +57,7 @@ wss.on("connection", function (client) {
                 }));
             });
 
-            //special listener for the first byte of the buffer
+            //send listener
             deepgramConn.on("open", function () {
                 console.log("Connection Open to Deepgram...");
                 deepgramConn.send(buffer);
@@ -61,7 +79,7 @@ wss.on("connection", function (client) {
     });
 
     client.on("close", function () {
-        if(deepgramConn){
+        if (deepgramConn) {
             deepgramConn.terminate();
         }
         console.log("Client disconnected");

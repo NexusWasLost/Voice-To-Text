@@ -1,5 +1,5 @@
 import { createRecorder, startRecording, stopRecording, setupMic } from "./mic.js";
-import { createSocket, attachSocketListeners, sendDataToServerWS } from "./sock.js";
+import { createSocket, attachSocketListeners } from "./sock.js";
 
 let transcriptChunks = [], transcriptCount = 0;
 let recorder;
@@ -28,18 +28,13 @@ async function changeRecordingState() {
         //setup mic
         const mediaStream = await setupMic();
         //create recorder
-        recorder = createRecorder(mediaStream);
+        recorder = createRecorder(mediaStream, socket);
         //start recording
         startRecording(recorder);
-        //whenever data is there send to the server
-        recorder.addEventListener("dataavailable", function (event) {
-            sendDataToServerWS(socket, event.data);
-        });
-
         return;
     }
 
-    stopRecording(recorder);
+    stopRecording(recorder, socket);
 
 }
 
