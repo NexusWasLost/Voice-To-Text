@@ -16,7 +16,6 @@ export function attachSocketListeners(socket, onData) {
 
     socket.onmessage = function (message) {
         const recieved = JSON.parse(message.data);
-        console.log(recieved.transcript);
         onData(recieved.transcript);
     }
 
