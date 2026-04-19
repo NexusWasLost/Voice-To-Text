@@ -1,5 +1,4 @@
-#  Voice To Text Application (Wispr Flow Clone)
-
+#  Voice To Text Application
 A lightweight and simple Voice-To-Text web app made using **Node.js** and **Deepgram**.
 
 ## 📦 Features
